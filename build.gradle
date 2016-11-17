@@ -56,6 +56,6 @@ dependencies {
     // tag::actuator[]
     compile("org.springframework.boot:spring-boot-starter-actuator")
     // end::actuator[]
-    compile ("mysql:mysql-connector-java")
+    compile("mysql:mysql-connector-java:6.0.5")
     testCompile("junit:junit", "org.springframework.boot:spring-boot-starter-test")
 }
