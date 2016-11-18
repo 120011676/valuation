@@ -56,6 +56,8 @@ dependencies {
     // tag::actuator[]
     compile("org.springframework.boot:spring-boot-starter-actuator")
     // end::actuator[]
-    compile("mysql:mysql-connector-java:6.0.5")
+    compile "org.springframework.boot:spring-boot-starter-data-jpa", "org.hibernate:hibernate-core:5.2.4.Final"
+    compile "mysql:mysql-connector-java:6.0.5" //使用后不能自动创建表
+//    compile "mysql:mysql-connector-java"
     testCompile("junit:junit", "org.springframework.boot:spring-boot-starter-test")
 }

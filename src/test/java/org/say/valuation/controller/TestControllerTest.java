@@ -26,7 +26,7 @@ public class TestControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void getHello() throws Exception {
+    public void getA() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/test/a").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo("a")));
