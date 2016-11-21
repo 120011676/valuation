@@ -19,13 +19,24 @@ public class TestController {
     private UserService userService;
 
     @RequestMapping("a")
-    public String a() {
-        User user= new User();
+    public List<User> a() {
+        User user = new User();
         user.setName("aaa中文");
         System.out.println(user.getId());
         this.userService.save(user);
         List<User> users = this.userService.list();
         System.out.println(users);
-        return "a";
+        System.out.println("aaa");
+        return users;
+    }
+
+    @RequestMapping("b")
+    public User b() {
+        return null;
+    }
+
+    @RequestMapping("c")
+    public void c() {
+        int c = 1 / 0;
     }
 }
