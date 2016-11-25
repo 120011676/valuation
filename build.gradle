@@ -24,6 +24,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE")
 //        classpath 'org.springframework:springloaded:1.2.6.RELEASE'
+//        classpath 'io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE'
     }
 }
 
@@ -31,11 +32,22 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+//apply plugin: 'io.spring.dependency-management'
 
 jar {
-    baseName = 'gs-spring-boot'
+    baseName = 'valuation-spring-boot'
     version = '0.1.0'
 }
+
+springBoot {
+    executable = true
+}
+
+//dependencyManagement {
+//    imports {
+//        mavenBom 'io.spring.platform:platform-bom:2.0.8.RELEASE'
+//    }
+//}
 
 repositories {
     maven {
@@ -47,26 +59,33 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"
+}
+
 dependencies {
     // tag::jetty[]
     compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
+//        exclude module: "spring-boot-starter-tomcat"
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
     // end::jetty[]
+//    compile("org.springframework.boot:spring-boot-starter-undertow")
     // tag::actuator[]
     compile("org.springframework.boot:spring-boot-starter-actuator")
     // end::actuator[]
     compile "org.springframework.boot:spring-boot-starter-data-jpa", "org.hibernate:hibernate-core:5.2.4.Final"
-    compile "mysql:mysql-connector-java:6.0.5" //使用后不能自动创建表
+    compile "mysql:mysql-connector-java:6.0.5"
     compile "com.alibaba:druid:1.0.26"
+    compile "org.springframework.boot:spring-boot-autoconfigure"
 //    compile "mysql:mysql-connector-java"
-//    compile("org.springframework.boot:spring-boot-devtools")
+    compile("org.springframework.boot:spring-boot-devtools")
 //    compile("org.springframework.boot:spring-boot-starter-data-rest")
 //    compile("org.springframework.boot:spring-boot-starter-hateoas")
-//    compile("org.projectlombok:lombok:1.16.10")
+//    compileOnly("org.projectlombok:lombok:1.16.10")
+    compile "org.springframework.boot:spring-boot-starter-hateoas"
     compile("org.springframework.boot:spring-boot-starter-redis")
-    testCompile("junit:junit", "org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
 //bootRun {

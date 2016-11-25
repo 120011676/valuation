@@ -1,0 +1,88 @@
+debug: false
+# 服务配置信息
+server:
+  port: ${port:8080}
+  context-path: /
+  session:
+    timeout: 30
+    # 服务器session持久性
+    persistent: true
+    # 服务器session持久性,文件保存路径
+#    storeDir:
+    # cookie配置
+#    cookie:
+#      name:
+  compression:
+    # http response压缩 (默认最小2048 bytes)
+    enabled: true
+    # 最小压缩大小
+#    min-response-size: 2048
+    # 压缩类型
+#    mime-types:
+
+management:
+  port: 8081
+
+# spring配置信息
+spring:
+  datasource:
+    # 是否执行初始化sql文件
+    initialize: true
+    # 数据库类型（初始化sql用） schema.sql and data.sql，schema-${platform}.sql and data-${platform}.sql
+    platform: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/valuation?useSSL=true&createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&k&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false
+    username: root
+    password: root
+
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size: 5
+    min-idle: 5
+    max-idle: 10
+    max-active: 100
+    # 配置获取连接等待超时的时间
+    max-wait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    time-between-eviction-runs-millis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    min-evictable-idle-time-millis: 300000
+    validation-query: SELECT 1 FROM DUAL
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    pool-prepared-statements: true
+    maximum-pool-size: 100
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=3000
+
+  # spring bath配置
+  batch:
+    initializer:
+      enabled: false
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  jpa:
+    show-sql: true
+    # 是否自动生成表（DDL）
+    generate-ddl: true
+#    hibernate:
+#      ddl-auto: update
+
+  devtools:
+    remote:
+      # 远程自动重启
+      secret: mysecret
+    restart:
+      enabled: true
+      trigger-file: .reloadtrigger
+    livereload:
+      # 触发浏览器刷新
+      enabled: true
+  main:
+    banner-mode: off

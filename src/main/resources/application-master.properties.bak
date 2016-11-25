@@ -8,7 +8,9 @@ spring.datasource.username=root
 spring.datasource.password=root
 
 spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
-spring.datasource.initialSize=10
+spring.datasource.initialSize=5
+
+#spring.datasource.initialSize=10
 spring.datasource.maxActive=20
 spring.datasource.maxIdle=8
 spring.datasource.minIdle=8

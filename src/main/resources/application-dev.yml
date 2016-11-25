@@ -1,0 +1,6 @@
+debug: true
+#trace: true
+
+app:
+  name: valuation
+  description: ${app.name} is a Spring Boot application
