@@ -23,6 +23,7 @@ server:
 management:
   port: 8081
 
+spring.datasource.initialSize: 5
 # spring配置信息
 spring:
   datasource:

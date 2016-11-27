@@ -1,0 +1,21 @@
+server:
+  port: ${port:8080}
+
+spring:
+  profiles:
+    active: master
+  boot:
+    admin:
+      url: http://localhost:${server.port}
+  application:
+    name: valuation
+
+info:
+  contact:
+    email: 120011676@qq.com
+    phone: 15828395524
+
+endpoints:
+  shutdown:
+    # 关闭应用
+    enabled: true

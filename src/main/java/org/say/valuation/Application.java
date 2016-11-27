@@ -1,5 +1,6 @@
 package org.say.valuation;
 
+import de.codecentric.boot.admin.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@EntityScan(basePackages="org.say.valuation.entity")
 //@EnableJpaRepositories(basePackages="org.say.valuation.dao")
 //@EnableAutoConfiguration
+@EnableAdminServer
 @SpringBootApplication
 public class Application {
 
