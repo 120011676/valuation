@@ -10,17 +10,17 @@ import javax.persistence.Table;
 import java.util.List;
 
 /**
- * Created by say on 18/11/2016.
+ * Created by say on 28/11/2016.
  */
 @Entity
 @Table
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Role extends BaseEntity {
+public class Permission extends BaseEntity {
     @Column
     private String name;
+    @Column
+    private String permission;
     @ManyToMany
-    private List<User> users;
-    @ManyToMany
-    private List<Permission> permissions;
+    private List<Role> roles;
 }

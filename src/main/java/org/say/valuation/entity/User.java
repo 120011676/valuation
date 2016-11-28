@@ -1,45 +1,27 @@
 package org.say.valuation.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by say on 18/11/2016.
  */
 @Entity
 @Table
-//@Data
-//@EqualsAndHashCode(callSuper = true)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
-    @Column
+    @Column(unique = true, nullable = false)
+    @NotBlank
     private String username;
     @Column
     private String name;
     @Column
     private String password;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @ManyToMany
+    private List<Role> roles;
 }
