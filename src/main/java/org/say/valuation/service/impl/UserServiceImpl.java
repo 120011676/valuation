@@ -27,4 +27,9 @@ public class UserServiceImpl implements UserService {
         this.userDao.save(user).getId();
         return "m";
     }
+
+    @Override
+    public User findByUsername(String username) {
+        return null;
+    }
 }

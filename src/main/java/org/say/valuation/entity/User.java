@@ -22,6 +22,8 @@ public class User extends BaseEntity {
     private String name;
     @Column
     private String password;
+    @Column
+    private String passwordSalt;
     @ManyToMany
     private List<Role> roles;
 }
