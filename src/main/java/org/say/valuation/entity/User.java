@@ -24,6 +24,6 @@ public class User extends BaseEntity {
     private String password;
     @Column
     private String passwordSalt;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 }

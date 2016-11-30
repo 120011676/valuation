@@ -1,7 +1,5 @@
 package org.say.valuation.bean.shiro;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -11,6 +9,8 @@ import org.say.valuation.entity.Permission;
 import org.say.valuation.entity.Role;
 import org.say.valuation.entity.User;
 import org.say.valuation.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.util.HashSet;
@@ -20,6 +20,8 @@ import java.util.List;
  * Created by say on 29/11/2016.
  */
 public class CustomRealm extends AuthorizingRealm {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomRealm.class);
 
     @Resource
     private UserService userService;
@@ -51,8 +53,9 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken upt = (UsernamePasswordToken) token;
-        ReflectionToStringBuilder.reflectionToString(token, ToStringStyle.MULTI_LINE_STYLE);
+//        ReflectionToStringBuilder.reflectionToString(token, ToStringStyle.MULTI_LINE_STYLE);
         User user = this.userService.findByUsername(upt.getUsername());
+        LOGGER.info("user:{}", user);
         if (user != null) {
             return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
         }

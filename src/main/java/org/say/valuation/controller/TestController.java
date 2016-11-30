@@ -39,4 +39,12 @@ public class TestController {
     public void c() {
         int c = 1 / 0;
     }
+
+
+    @RequestMapping("jsonp")
+    public User jsonp() {
+        User user = new User();
+        user.setName("jsonp中文");
+        return user;
+    }
 }

@@ -1,64 +1,111 @@
 package org.say.valuation.bean.shiro;
 
-import lombok.Setter;
-import org.apache.shiro.realm.jdbc.JdbcRealm;
+import org.apache.shiro.authc.credential.DefaultPasswordService;
+import org.apache.shiro.authc.credential.PasswordMatcher;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
-import javax.annotation.Resource;
-import javax.sql.DataSource;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by say on 29/11/2016.
  */
 @Configuration
-@ConfigurationProperties(prefix = "shiro")
 public class ShiroConfiguration {
 
-    @Resource
-    private DataSource dataSource;
-
-    @Setter
-    private String filterChainDefinitions;
-    @Setter
-    private String unauthorizedUrl;
-    @Setter
-    private String successUrl;
-    @Setter
-    private String loginUrl;
-
-    @Setter
-    private String authenticationQuery;
-    @Setter
-    private String userRolesQuery;
-    @Setter
-    private String permissionsQuery;
-
-    public ShiroFilterFactoryBean shiroFilter() {
-        ShiroFilterFactoryBean sffb = new ShiroFilterFactoryBean();
-        return sffb;
+    @Bean(name = "lifecycleBeanPostProcessor")
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
     }
+//
+//    @Bean(name = "hashedCredentialsMatcher")
+//    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+//        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+//        credentialsMatcher.setHashAlgorithmName("MD5");
+//        credentialsMatcher.setHashIterations(2);
+//        credentialsMatcher.setStoredCredentialsHexEncoded(true);
+//        return credentialsMatcher;
+//    }
 
     @Bean
-    public JdbcRealm jdbcRealm() {
-        JdbcRealm jdbcRealm = new JdbcRealm();
-        jdbcRealm.setAuthenticationQuery("");
-        jdbcRealm.setUserRolesQuery("");
-        jdbcRealm.setPermissionsQuery("");
-        System.out.println("dataSource:" + this.dataSource);
-        jdbcRealm.setDataSource(this.dataSource);
-        return jdbcRealm;
+    public PasswordMatcher passwordMatcher() {
+        PasswordMatcher pm = new PasswordMatcher();
+        pm.setPasswordService(new DefaultPasswordService());
+        return pm;
     }
 
-    @Bean
+    @Bean(name = "shiroRealm")
+    @DependsOn("lifecycleBeanPostProcessor")
+    public CustomRealm shiroRealm() {
+        CustomRealm realm = new CustomRealm();
+        realm.setCredentialsMatcher(passwordMatcher());
+//        realm.setCacheManager(ehCacheManager());
+        return realm;
+    }
+
+    @Bean(name = "ehCacheManager")
+    @DependsOn("lifecycleBeanPostProcessor")
+    public EhCacheManager ehCacheManager() {
+        return new EhCacheManager();
+    }
+
+    @Bean(name = "securityManager")
+    public DefaultWebSecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(shiroRealm());
+        securityManager.setCacheManager(ehCacheManager());
+        return securityManager;
+    }
+
+    @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilterFactoryBean() {
-        ShiroFilterFactoryBean sffb = new ShiroFilterFactoryBean();
-        sffb.setLoginUrl(this.loginUrl);
-        sffb.setSuccessUrl(this.successUrl);
-        sffb.setUnauthorizedUrl(this.unauthorizedUrl);
-        sffb.setFilterChainDefinitions(this.filterChainDefinitions);
-        return sffb;
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager());
+
+//        Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+//        LogoutFilter logoutFilter = new LogoutFilter();
+//        logoutFilter.setRedirectUrl("/login");
+//        filters.put("logout", logoutFilter);
+//        shiroFilterFactoryBean.setFilters(filters);
+
+        Map<String, String> filterChainDefinitionManager = new LinkedHashMap<String, String>();
+        filterChainDefinitionManager.put("/logout", "authc");
+//        filterChainDefinitionManager.put("/logout", "logout");
+        filterChainDefinitionManager.put("/user/**", "authc,roles[user]");
+        filterChainDefinitionManager.put("/shop/**", "authc,roles[shop]");
+        filterChainDefinitionManager.put("/admin/**", "authc,roles[admin]");
+        filterChainDefinitionManager.put("/**", "anon");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
+
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setSuccessUrl("/");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+
+        return shiroFilterFactoryBean;
     }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator daap = new DefaultAdvisorAutoProxyCreator();
+        daap.setProxyTargetClass(true);
+        return daap;
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
+        AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
+        aasa.setSecurityManager(securityManager());
+        return aasa;
+    }
+
 }

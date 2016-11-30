@@ -17,4 +17,6 @@ public interface UserDao extends PagingAndSortingRepository<User, String>, JpaSp
 
     @Query("from User")
     List<User> list();
+
+    User findByUsername(String username);
 }

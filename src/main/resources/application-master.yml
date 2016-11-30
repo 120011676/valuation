@@ -55,8 +55,8 @@ spring:
     show-sql: true
     # 是否自动生成表（DDL）
     generate-ddl: true
-#    hibernate:
-#      ddl-auto: update
+    hibernate:
+      ddl-auto: update
 
   devtools:
     remote:
