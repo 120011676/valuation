@@ -1,6 +1,5 @@
 package org.say.valuation;
 
-import de.codecentric.boot.admin.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -9,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@EntityScan(basePackages="org.say.valuation.entity")
 //@EnableJpaRepositories(basePackages="org.say.valuation.dao")
 //@EnableAutoConfiguration
-@EnableAdminServer
+//@EnableAdminServer
 @SpringBootApplication
 @EnableTransactionManagement
 public class Application {
