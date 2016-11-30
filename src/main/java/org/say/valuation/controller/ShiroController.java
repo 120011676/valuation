@@ -1,6 +1,5 @@
 package org.say.valuation.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -18,13 +17,13 @@ public class ShiroController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShiroController.class);
 
     @RequestMapping("login")
-    public JSONPObject login(String username, String password, boolean rememberMe, String callback) {
+    public String login(String username, String password, boolean rememberMe) {
         Subject subject = SecurityUtils.getSubject();
         AuthenticationToken token = new UsernamePasswordToken(username, password, rememberMe);
         try {
             subject.login(token);
             LOGGER.info("对用户[" + username + "]进行登录验证..验证通过");
-            return new JSONPObject(callback, "成功");
+            return "成功";
         } catch (UnknownAccountException e) {
             LOGGER.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");
         } catch (IncorrectCredentialsException e) {
@@ -40,8 +39,8 @@ public class ShiroController {
     }
 
     @RequestMapping("logout")
-    public JSONPObject logout(String callback) {
+    public String logout() {
         SecurityUtils.getSubject().logout();
-        return new JSONPObject(callback, "退出成功");
+        return "退出成功";
     }
 }
