@@ -17,7 +17,11 @@ public class Permission extends BaseEntity {
     @Column
     private String name;
     @Column
-    private String permission;
+    private String uri;
+    @ManyToOne
+    private Permission permission;
+    @OneToMany
+    private List<Permission> permissions;
     @ManyToMany
     private List<Role> roles;
 }

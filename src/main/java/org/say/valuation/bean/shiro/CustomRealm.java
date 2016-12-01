@@ -40,7 +40,7 @@ public class CustomRealm extends AuthorizingRealm {
                     List<Permission> permissions = r.getPermissions();
                     if (permissions != null && permissions.size() > 0) {
                         for (Permission p : permissions) {
-                            info.addStringPermission(p.getPermission());
+                            info.addStringPermission(p.getUri());
                         }
                     }
                 }

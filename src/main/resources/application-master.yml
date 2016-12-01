@@ -70,3 +70,8 @@ spring:
       enabled: true
   main:
     banner-mode: off
+
+#security:
+#  user:
+#    name: admin
+#    password: admin

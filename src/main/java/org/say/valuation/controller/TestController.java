@@ -1,5 +1,6 @@
 package org.say.valuation.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.say.valuation.entity.User;
 import org.say.valuation.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,20 @@ public class TestController {
     public User jsonp() {
         User user = new User();
         user.setName("jsonp中文");
+//        throw new NullPointerException();
         return user;
+    }
+
+    @RequestMapping("ex")
+    public User ex() {
+        System.out.println("11");
+        throw new NullPointerException();
+    }
+
+    @RequestMapping("ex1")
+    @RequiresPermissions("ss")
+    public User ex1() {
+        System.out.println("11");
+        throw new NullPointerException("666" + ((char) 27) + "异常错误");
     }
 }

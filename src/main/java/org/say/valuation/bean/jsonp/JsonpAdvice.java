@@ -13,15 +13,20 @@ import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpRespon
  */
 @RestControllerAdvice
 public class JsonpAdvice extends AbstractJsonpResponseBodyAdvice {
+    public static final String CALLBACK = "callback";
 
     public JsonpAdvice() {
-        super("callback");
+        super(CALLBACK);
     }
 
     @Override
     protected void beforeBodyWriteInternal(MappingJacksonValue bodyContainer, MediaType contentType, MethodParameter returnType, ServerHttpRequest request, ServerHttpResponse response) {
-        System.out.println(request.getURI());
+        Result result = new Result();
+        result.setStatus(true);
+        result.setCode("0000");
+        result.setMsg("成功");
+        result.setData(bodyContainer.getValue());
+        bodyContainer.setValue(result);
         super.beforeBodyWriteInternal(bodyContainer, contentType, returnType, request, response);
     }
-
 }
