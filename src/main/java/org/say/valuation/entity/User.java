@@ -1,5 +1,6 @@
 package org.say.valuation.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
@@ -21,9 +22,11 @@ public class User extends BaseEntity {
     @Column
     private String name;
     @Column
+    @JsonIgnore
     private String password;
     @Column
+    @JsonIgnore
     private String passwordSalt;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private List<Role> roles;
 }

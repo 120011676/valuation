@@ -1,16 +1,16 @@
 package org.say.valuation.service;
 
 import org.say.valuation.entity.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 /**
  * Created by say on 18/11/2016.
  */
 public interface UserService {
-    List<User> list();
+    Page<User> find(int page, int size, User user);
 
-    String save(User user);
+    User save(User user);
 
     User findByUsername(String username);
+
 }

@@ -1,9 +1,12 @@
 package org.say.valuation.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
 /**
@@ -17,7 +20,8 @@ public class BaseEntity {
     @Column
     private Integer id;
     @Column
-    private Boolean status;
+    private Boolean status = true;
     @Column
-    private Date createDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createDate = new Date();
 }

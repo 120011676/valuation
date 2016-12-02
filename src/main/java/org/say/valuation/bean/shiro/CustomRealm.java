@@ -53,11 +53,13 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken upt = (UsernamePasswordToken) token;
-//        ReflectionToStringBuilder.reflectionToString(token, ToStringStyle.MULTI_LINE_STYLE);
         User user = this.userService.findByUsername(upt.getUsername());
-        LOGGER.info("user:{}", user);
         if (user != null) {
-            return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+            if (user.getStatus() == null || !user.getStatus()) {
+                throw new DisabledAccountException();
+            } else {
+                return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+            }
         }
         return null;
     }

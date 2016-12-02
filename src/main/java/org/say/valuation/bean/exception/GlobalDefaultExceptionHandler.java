@@ -29,12 +29,10 @@ public class GlobalDefaultExceptionHandler {
         Result result = new Result();
         result.setStatus(false);
         String eStr = e.getMessage();
-        if (eStr != null) {
-            int index = eStr.indexOf(27);
-            if (index > -1) {
-                result.setCode(eStr.substring(0, index));
-                result.setMsg(eStr.substring(index + 1));
-            }
+        int index;
+        if (eStr != null && (index = eStr.indexOf(27)) > -1) {
+            result.setCode(eStr.substring(0, index));
+            result.setMsg(eStr.substring(index + 1));
         } else {
             result.setCode("9999");
             result.setMsg("接口异常:" + e.getMessage());

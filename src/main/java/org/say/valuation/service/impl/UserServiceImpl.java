@@ -3,9 +3,16 @@ package org.say.valuation.service.impl;
 import org.say.valuation.dao.UserDao;
 import org.say.valuation.entity.User;
 import org.say.valuation.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,14 +25,31 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public List<User> list() {
-        return this.userDao.list();
+    public Page<User> find(int page, int size, User user) {
+        Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "status", "createDate");
+        return this.userDao.findAll((root, query, cb) -> {
+            if (user != null) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (StringUtils.hasText(user.getUsername())) {
+                    predicates.add(cb.like(root.get("username"), "%" + user.getUsername() + "%"));
+                }
+                if (StringUtils.hasText(user.getName())) {
+                    predicates.add(cb.like(root.get("name"), "%" + user.getName() + "%"));
+                }
+                if (user.getStatus() != null) {
+                    predicates.add(cb.equal(root.get("status"), user.getStatus()));
+                }
+                if (predicates.size() > 0) {
+                    return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+                }
+            }
+            return null;
+        }, pageable);
     }
 
     @Override
-    public String save(User user) {
-        this.userDao.save(user).getId();
-        return "m";
+    public User save(User user) {
+        return this.userDao.save(user);
     }
 
     @Override

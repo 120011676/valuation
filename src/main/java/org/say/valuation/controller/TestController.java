@@ -3,11 +3,12 @@ package org.say.valuation.controller;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.say.valuation.entity.User;
 import org.say.valuation.service.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Random;
 
 /**
  * Created by say on 17/11/2016.
@@ -20,15 +21,25 @@ public class TestController {
     private UserService userService;
 
     @RequestMapping("a")
-    public List<User> a() {
+    public Page<User> a() {
         User user = new User();
+        user.setUsername(new Random().nextInt(100000) + "");
         user.setName("aaa中文");
+        User u = this.userService.save(user);
+        System.out.println(u);
         System.out.println(user.getId());
-        this.userService.save(user);
-        List<User> users = this.userService.list();
-        System.out.println(users);
+        Page<User> users = this.userService.find(0, 1000, null);
+        System.out.println(users.getContent());
         System.out.println("aaa");
         return users;
+    }
+
+
+    @RequestMapping("lz")
+    public User lz() {
+        User user = this.userService.findByUsername("admin");
+        System.out.println(user);
+        return null;
     }
 
     @RequestMapping("b")
@@ -61,5 +72,14 @@ public class TestController {
     public User ex1() {
         System.out.println("11");
         throw new NullPointerException("666" + ((char) 27) + "异常错误");
+    }
+
+
+    @RequestMapping("user")
+    public User user() {
+        User user = new User();
+        user.setName("jsonp中文111");
+//        throw new NullPointerException();
+        return user;
     }
 }

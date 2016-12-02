@@ -89,15 +89,19 @@ public class ShiroConfiguration {
         filters.put("jsonpPerms", jsonpFilter);
         shiroFilterFactoryBean.setFilters(filters);
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<String, String>();
-        filterChainDefinitionManager.put("/logout", "anon");
-//        filterChainDefinitionManager.put("/logout", "logout");
-        filterChainDefinitionManager.put("/user/**", "jsonpPerms");
-        filterChainDefinitionManager.put("/shop/**", "authc,roles[shop]");
-        filterChainDefinitionManager.put("/admin/**", "authc,roles[admin]");
-        filterChainDefinitionManager.put("/**", "anon");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
         List<Permission> permissions = this.permissionService().findByStatusTrue();
-        System.out.println(permissions.size());
+        if (permissions != null) {
+            for (Permission p : permissions) {
+                filterChainDefinitionManager.put(p.getUri() + "*", "jsonpPerms[" + p.getUri() + "]");
+            }
+        }
+//        filterChainDefinitionManager.put("/logout", "anon");
+//        filterChainDefinitionManager.put("/logout", "logout");
+//        filterChainDefinitionManager.put("/user/**", "jsonpPermss");
+//        filterChainDefinitionManager.put("/shop/**", "authc,roles[shop]");
+//        filterChainDefinitionManager.put("/admin/**", "authc,roles[admin]");
+//        filterChainDefinitionManager.put("/**", "anon");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
 //        shiroFilterFactoryBean.setLoginUrl("/logins");
 //        shiroFilterFactoryBean.setSuccessUrl("/");
 //        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
