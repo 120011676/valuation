@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@EnableJpaRepositories(basePackages="org.say.valuation.dao")
 //@EnableAutoConfiguration
 //@EnableAdminServer
+
+
+//@Configuration
+//@ComponentScan
 @SpringBootApplication
 @EnableTransactionManagement
 public class Application {
@@ -24,4 +28,25 @@ public class Application {
 //        }
     }
 
+
+//    @Bean
+//    public CommandLineRunner init(final ActivitiService myService) {
+//        return new CommandLineRunner() {
+//            public void run(String... strings) throws Exception {
+//                if (personRepository.findAll().size() == 0) {
+//                    personRepository.save(new Person("wtr"));
+//                    personRepository.save(new Person("wyf"));
+//                    personRepository.save(new Person("admin"));
+//                }
+//                if (compRepository.findAll().size() == 0) {
+//                    Comp group = new Comp("great company");
+//                    compRepository.save(group);
+//                    Person admin = personRepository.findByPersonName("admin");
+//                    Person wtr = personRepository.findByPersonName("wtr");
+//                    admin.setComp(group); wtr.setComp(group);
+//                    personRepository.save(admin); personRepository.save(wtr);
+//                }
+//            }
+//        };
+//    }
 }

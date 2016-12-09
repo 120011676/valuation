@@ -4,11 +4,8 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
 
 /**
  * Created by say on 07/12/2016.
@@ -27,14 +24,46 @@ public class ActivitiConfig {
     }
 
 
-    @Bean
-    public DataSource database() {
-        return DataSourceBuilder.create()
-                .url(" jdbc:mysql://127.0.0.1:3306/valuation?useSSL=true&createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&k&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false")
-                .username("root")
-                .password("root")
-                .driverClassName("com.mysql.cj.jdbc.Driver")
-                .build();
-    }
+//    @Bean
+//    public CommandLineRunner init(RepositoryService repositoryService, RuntimeService runtimeService, TaskService taskService) {
+//        return strings -> {
+//            Map<String, Object> variables = new HashMap<String, Object>();
+//            variables.put("applicantName", "John Doe");
+//            variables.put("email", "john.doe@activiti.com");
+//            variables.put("phoneNumber", "123456789");
+//            runtimeService.startProcessInstanceByKey("hireProcess", variables);
+//        };
+//    }
 
+
+//    @Bean
+//    public InitializingBean usersAndGroupsInitializer(IdentityService identityService) {
+//        return () -> {
+//            Group group = identityService.newGroup("user");
+//            group.setName("users");
+//            group.setType("security-role");
+//            identityService.saveGroup(group);
+//            User admin = identityService.newUser("admin");
+//            admin.setPassword("admin");
+//            identityService.saveUser(admin);
+//
+//        };
+//    }
+
+//    @Bean
+//    public DataSource database() {
+//        return DataSourceBuilder.create()
+//                .url(" jdbc:mysql://127.0.0.1:3306/valuation?useSSL=true&createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&k&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false")
+//                .username("root")
+//                .password("root")
+//                .driverClassName("com.mysql.cj.jdbc.Driver")
+//                .build();
+//    }
+
+//    @Bean
+//    public StandaloneProcessEngineConfiguration standaloneProcessEngineConfiguration(){
+//        StandaloneProcessEngineConfiguration spec = new StandaloneProcessEngineConfiguration();
+//        spec.setDataSource()
+//        return spec;
+//    }
 }
