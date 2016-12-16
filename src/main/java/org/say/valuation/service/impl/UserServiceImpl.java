@@ -3,10 +3,7 @@ package org.say.valuation.service.impl;
 import org.say.valuation.dao.UserDao;
 import org.say.valuation.entity.User;
 import org.say.valuation.service.UserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -55,5 +52,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return this.userDao.findByUsername(username);
+    }
+
+    @Override
+    public long count() {
+        return this.userDao.count();
     }
 }
