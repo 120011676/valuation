@@ -28,20 +28,22 @@ public class GlobalDefaultExceptionHandler {
         LOGGER.error(e.getMessage(), e);
         Result result = new Result();
         result.setStatus(false);
-        String eStr = e.getMessage();
-        int index;
-        if (eStr != null && (index = eStr.indexOf(27)) > -1) {
-            result.setCode(eStr.substring(0, index));
-            result.setMsg(eStr.substring(index + 1));
+        if (e instanceof MsgException) {
+            MsgException me = (MsgException) e;
+            result.setCode(me.getCode());
+            result.setMsg(me.getMessage());
         } else {
-            result.setCode("9999");
-            result.setMsg("接口异常:" + e.getMessage());
+            String unknownCode = "9999";
+            result.setCode(unknownCode);
+            result.setMsg(e.getMessage());
         }
-        if ("true".equals(req.getParameter("debug"))) {
+        String debugName = "debug";
+        String debug = req.getParameter(debugName);
+        if ("true".equals(debug)) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
-            result.setMsg("接口详细异常:" + sw);
+            result.setMsg(sw.toString());
         }
         ControllerUtil.jsonp(result, req, resp);
     }

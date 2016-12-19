@@ -8,6 +8,7 @@ import org.say.valuation.bean.jsonp.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -25,18 +26,18 @@ public class ControllerUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(ControllerUtil.class);
 
     public static HttpServletRequest getRequest() {
-        return ((ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes()).getRequest();
+        RequestAttributes requestAttributes = RequestContextHolder
+                .getRequestAttributes();
+        if (requestAttributes != null && requestAttributes instanceof ServletRequestAttributes) {
+            return ((ServletRequestAttributes) requestAttributes).getRequest();
+        }
+        return null;
     }
 
     public static String getLoginUsername() {
-        Object obj = null;
-        try {
-            obj = SecurityUtils.getSubject().getPrincipal();
-        } catch (Exception e) {
-        }
+        Object obj = SecurityUtils.getSubject().getPrincipal();
         if (obj != null && obj instanceof String) {
-            return (String) SecurityUtils.getSubject().getPrincipal();
+            return (String) obj;
         }
         return null;
     }

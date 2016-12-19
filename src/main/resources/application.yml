@@ -9,6 +9,9 @@ spring:
       url: http://localhost:${server.port}
   application:
     name: valuation
+  messages:
+    basename: messages
+    cache-seconds: 60
 
 info:
   contact:

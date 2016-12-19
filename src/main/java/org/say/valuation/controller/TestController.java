@@ -1,6 +1,7 @@
 package org.say.valuation.controller;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.say.valuation.bean.exception.I18nMsgException;
 import org.say.valuation.entity.User;
 import org.say.valuation.service.UserService;
 import org.springframework.data.domain.Page;
@@ -82,4 +83,12 @@ public class TestController {
 //        throw new NullPointerException();
         return user;
     }
+
+
+    @RequestMapping("exi18n")
+    public User exi18n() {
+        System.out.println("exi18n");
+        throw new I18nMsgException("9999");
+    }
+
 }
