@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpRespon
 /**
  * Created by say on 30/11/2016.
  */
-@RestControllerAdvice
+@RestControllerAdvice("org.say.valuation")
 public class JsonpAdvice extends AbstractJsonpResponseBodyAdvice {
     public static final String CALLBACK = "callback";
 

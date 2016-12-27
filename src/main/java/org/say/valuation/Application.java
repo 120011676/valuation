@@ -2,6 +2,7 @@ package org.say.valuation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 //@ComponentScan(basePackages="org.say.valuation")
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 //@Configuration
-//@ComponentScan
+@ComponentScan({"org.activiti.rest", "org.say.valuation"})
 @SpringBootApplication
 @EnableTransactionManagement
 public class Application {

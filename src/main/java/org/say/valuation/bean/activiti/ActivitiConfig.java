@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ActivitiConfig {
 
+
 //    @Bean
 //    public CommandLineRunner init(RepositoryService repositoryService, RuntimeService runtimeService, TaskService taskService) {
 //        return strings -> {

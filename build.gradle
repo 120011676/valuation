@@ -61,6 +61,11 @@ targetCompatibility = 1.8
 
 configurations {
     compile.exclude module: "spring-boot-starter-tomcat"
+//    compile.exclude module: "spring-security-config"
+//    compile.exclude module: "spring-security-crypto"
+//    compile.exclude module: "spring-security-web"
+//    compile.exclude module: "spring-security-config"
+//    compile.exclude module: "spring-security-core"
 }
 
 dependencies {
@@ -75,7 +80,7 @@ dependencies {
     // tag::actuator[]
     compile("org.springframework.boot:spring-boot-starter-actuator")
     // end::actuator[]
-    compile "org.springframework.boot:spring-boot-starter-data-jpa", "org.hibernate:hibernate-core:5.2.4.Final"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa", "org.hibernate:hibernate-core:5.2.5.Final"
     compile "mysql:mysql-connector-java:5.1.38"
     compile "com.zaxxer:HikariCP:2.5.1"
 //    compile "com.querydsl:querydsl-jpa:4.1.4"
@@ -93,7 +98,38 @@ dependencies {
 //    compile "org.springframework.boot:spring-boot-starter-security"
 
     compile "org.activiti:activiti-spring-boot-starter-basic:5.22.0"
-//    compile "org.activiti:activiti-spring-boot-starter-rest-api:5.22.0"
+    compile "org.activiti:activiti-spring-boot-starter-jpa:5.22.0"
+    compile("org.activiti:activiti-spring-boot-starter-rest-api:5.22.0") {
+        exclude module: "spring-boot-starter-web"
+//        exclude module: "activiti-spring-boot-starter-basic"
+//        exclude module: "activiti-common-rest"
+//        exclude module: "activiti-rest"
+    }
+
+    compile("org.activiti:activiti-modeler:5.22.0") {
+        exclude module: "spring-beans"
+        exclude module: "spring-context"
+        exclude module: "spring-core"
+        exclude module: "spring-tx"
+        exclude module: "spring-web"
+        exclude module: "spring-webmvc"
+        exclude module: "spring-security-config"
+        exclude module: "spring-security-crypto"
+        exclude module: "spring-security-web"
+        exclude module: "spring-security-config"
+    }
+    compile("org.activiti:activiti-diagram-rest:5.22.0") {
+        exclude module: "spring-beans"
+        exclude module: "spring-context"
+        exclude module: "spring-core"
+        exclude module: "spring-tx"
+        exclude module: "spring-web"
+        exclude module: "spring-webmvc"
+        exclude module: "spring-security-config"
+        exclude module: "spring-security-crypto"
+        exclude module: "spring-security-web"
+        exclude module: "spring-security-config"
+    }
 }
 
 //bootRun {
