@@ -98,13 +98,13 @@ dependencies {
 //    compile "org.springframework.boot:spring-boot-starter-security"
 
     compile "org.activiti:activiti-spring-boot-starter-basic:5.22.0"
-    compile "org.activiti:activiti-spring-boot-starter-jpa:5.22.0"
-    compile("org.activiti:activiti-spring-boot-starter-rest-api:5.22.0") {
-        exclude module: "spring-boot-starter-web"
-//        exclude module: "activiti-spring-boot-starter-basic"
-//        exclude module: "activiti-common-rest"
-//        exclude module: "activiti-rest"
-    }
+//    compile "org.activiti:activiti-spring-boot-starter-jpa:5.22.0"
+//    compile("org.activiti:activiti-spring-boot-starter-rest-api:5.22.0") {
+//        exclude module: "spring-boot-starter-web"
+////        exclude module: "activiti-spring-boot-starter-basic"
+////        exclude module: "activiti-common-rest"
+////        exclude module: "activiti-rest"
+//    }
 
     compile("org.activiti:activiti-modeler:5.22.0") {
         exclude module: "spring-beans"

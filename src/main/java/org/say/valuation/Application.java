@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 //@Configuration
-@ComponentScan({"org.activiti.rest", "org.say.valuation"})
+@ComponentScan({"org.activiti", "org.say.valuation"})
 @SpringBootApplication
 @EnableTransactionManagement
 public class Application {
